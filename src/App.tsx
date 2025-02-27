@@ -127,15 +127,22 @@ function App() {
             {/* Hero section with image */}
             <section className="mb-16 flex flex-col md:flex-row items-center gap-8">
               <div className="md:w-1/2">
-                <h1 className="text-3xl md:text-5xl font-bold text-[#8d8d6b] mb-4">
-                  Recupere Sua Energia e Bem-Estar com Reposição Hormonal
-                  Individualizada
-                </h1>
+              <h1 className="text-3xl md:text-5xl font-bold text-[#7a7a5d] mb-4 leading-tight">
+  Recupere Sua Energia e Bem-Estar com{' '}
+  <span className="inline-block bg-[#d9d7c6] text-[#7a7a5d] px-2 rounded-md">
+    Reposição Hormonal Individualizada
+  </span>
+</h1>
+
+
+
                 <p className="text-lg md:text-xl text-gray-700 mb-8">
                   Alívio para fadiga, baixa disposição, alterações de humor e
                   outros sintomas que comprometem sua qualidade de vida. Meu
                   tratamento é focado em te ajudar você a voltar a se sentir
-                  bem.
+                  bem. Reposições hormonais para homem, reposição hormonal 
+                  para mulher, reposição hormonal para menopausa, 
+                  reposição hormonal para andropausa.
                 </p>
                 <div className="block">
                   <button
