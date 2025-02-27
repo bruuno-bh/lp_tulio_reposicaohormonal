@@ -8,8 +8,23 @@ function App() {
     phone: '',
   });
 
+  const [userIp, setUserIp] = useState(''); // Estado para armazenar o IP do usuário
   const [showPopup, setShowPopup] = useState(false); // Popup de agendamento no mobile
   const [showErrorPopup, setShowErrorPopup] = useState(false); // Popup de erro ao enviar o formulário
+
+  // Obtém o IP do usuário ao carregar a página
+  useEffect(() => {
+    const fetchIp = async () => {
+      try {
+        const response = await fetch('https://api64.ipify.org?format=json');
+        const data = await response.json();
+        setUserIp(data.ip);
+      } catch (error) {
+        console.error('Erro ao obter IP:', error);
+      }
+    };
+    fetchIp();
+  }, []);
 
   // Exibe o popup de agendamento após 5 segundos no mobile
   useEffect(() => {
@@ -17,7 +32,7 @@ function App() {
       if (window.innerWidth < 768) {
         setShowPopup(true);
       }
-    }, 1000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -35,6 +50,13 @@ function App() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const submissionData = {
+      ...formData,
+      submissionDate: new Date().toISOString(), // Data e hora da submissão no formato ISO
+      userIp: userIp || 'Não disponível', // IP do usuário
+      userUrl: window.location.href, // URL da página no momento do envio
+    };
+
     try {
       const response = await fetch(
         'https://hook.us2.make.com/wcamker88oac7htbehy9fcbo3pdafcqm',
@@ -43,7 +65,7 @@ function App() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(submissionData),
         }
       );
 
@@ -462,17 +484,26 @@ function App() {
       </main>
 
       <footer className="bg-[#8d8d6b] text-white py-6">
-        <div className="container mx-auto px-4 text-center">
-          <p className="mb-2">
-            © 2025 Clínica de Reposição Hormonal. Todos os direitos reservados.
-          </p>
-          <p className="text-sm">
-            Este site não substitui uma consulta médica. Procure sempre um
-            profissional de saúde qualificado.
-          </p>
-        </div>
-      </footer>
-
+  <div className="container mx-auto px-4 text-center">
+    <p className="mb-2">
+      © 2025 Dr. Túlio Safar. Todos os direitos reservados.
+    </p>
+    <p className="text-sm">
+      Este site não substitui uma consulta médica. Procure sempre um
+      profissional de saúde qualificado.
+    </p>
+    <p className="text-sm mt-2">
+      <a
+        href="https://tuliosafar.com.br/politica-de-privacidade/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline hover:text-gray-300 transition-colors"
+      >
+        Política de Privacidade
+      </a>
+    </p>
+  </div>
+</footer>
       {/* Mobile floating CTA popup */}
       {showPopup && (
         <div className="fixed bottom-4 left-4 right-4 bg-white p-4 rounded-lg shadow-lg z-50 md:hidden">
